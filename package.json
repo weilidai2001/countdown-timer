@@ -1,0 +1,12 @@
+{
+  "name": "my-electron-timer",
+  "version": "1.0.0",
+  "description": "Countdown timer that puts computer to sleep",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^13.0.0"
+  }
+}
