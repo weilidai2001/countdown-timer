@@ -4,9 +4,20 @@
   "description": "Countdown timer that puts computer to sleep",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder --win portable --x64 --ia32"
   },
   "dependencies": {
-    "electron": "^13.0.0"
+  },
+  "devDependencies": {
+    "electron": "^13.0.0",
+    "electron-builder": "^22.11.7"
+  },
+  "build": {
+    "appId": "com.yourname.countdown-timer",
+    "productName": "Countdown Timer",
+    "win": {
+      "target": "portable"
+    }
   }
 }

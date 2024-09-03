@@ -5,17 +5,20 @@ const { exec } = require('child_process');
 let win;
 
 function createWindow() {
-  win = new BrowserWindow({
-    width: 250,
-    height: 300,
+  const win = new BrowserWindow({
+    width: 800,
+    height: 600,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
-    },
-    resizable: false,
-    frame: false,
-    transparent: true
+    }
   });
+
+  // Set the window to be always on top
+  win.setAlwaysOnTop(true, 'screen-saver');
+
+  // Set additional flags to make it visible on fullscreen applications
+  win.setVisibleOnAllWorkspaces(true);
 
   win.loadFile('index.html');
 }
@@ -36,7 +39,7 @@ app.on('activate', () => {
 
 ipcMain.on('put-to-sleep', () => {
   if (process.platform === 'win32') {
-    exec('rundll32.exe powrprof.dll,SetSuspendState 0,1,0');
+    exec('rundll32.exe user32.dll,LockWorkStation');
   } else if (process.platform === 'darwin') {
     exec('pmset sleepnow');
   }
