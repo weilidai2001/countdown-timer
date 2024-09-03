@@ -1,28 +1,46 @@
 const { ipcRenderer } = require('electron');
-const minutesInput = document.getElementById('minutes');
-const secondsInput = document.getElementById('seconds');
-const startBtn = document.getElementById('startBtn');
+
+const timeDisplay = document.getElementById('time-display');
+const startBtn = document.getElementById('startButton');
 const pauseBtn = document.getElementById('pauseBtn');
 const stopBtn = document.getElementById('stopBtn');
 const timerDisplay = document.getElementById('timer');
 const setupView = document.getElementById('setup-view');
 const timerView = document.getElementById('timer-view');
 
+const minus1MinBtn = document.getElementById('minus-1-min');
+const plus1MinBtn = document.getElementById('plus-1-min');
+const minus10SecBtn = document.getElementById('minus-10-sec');
+const plus10SecBtn = document.getElementById('plus-10-sec');
+
 let countdown;
-let totalSeconds;
+let totalSeconds = 11 * 60; // Default to 11 minutes
 let isPaused = false;
+
+function updateTimeDisplay() {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    timeDisplay.textContent = `${padZero(minutes)}:${padZero(seconds)}`;
+}
+
+minus1MinBtn.addEventListener('click', () => adjustTime(-60));
+plus1MinBtn.addEventListener('click', () => adjustTime(60));
+minus10SecBtn.addEventListener('click', () => adjustTime(-10));
+plus10SecBtn.addEventListener('click', () => adjustTime(10));
+
+function adjustTime(seconds) {
+    totalSeconds += seconds;
+    if (totalSeconds < 0) totalSeconds = 0;
+    updateTimeDisplay();
+}
 
 startBtn.addEventListener('click', startCountdown);
 pauseBtn.addEventListener('click', togglePause);
 stopBtn.addEventListener('click', stopCountdown);
 
 function startCountdown() {
-    const minutes = parseInt(minutesInput.value) || 0;
-    const seconds = parseInt(secondsInput.value) || 0;
-    totalSeconds = minutes * 60 + seconds;
-
     if (totalSeconds <= 0) {
-        alert('Please enter a valid time.');
+        alert('Please set a valid time.');
         return;
     }
     
@@ -61,8 +79,6 @@ function stopCountdown() {
     ipcRenderer.send('stop-countdown');
     isPaused = false;
     pauseBtn.textContent = 'Pause';
-    minutesInput.value = '';
-    secondsInput.value = '';
 }
 
 function updateTimerDisplay() {
@@ -74,6 +90,9 @@ function updateTimerDisplay() {
 function padZero(num) {
     return num.toString().padStart(2, '0');
 }
+
+// Initialize the time display
+updateTimeDisplay();
 
 // Add this at the end of the file
 const closeButton = document.getElementById('close-button');

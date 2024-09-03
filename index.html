@@ -1,16 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Countdown Timer</title>
+    <title>Sleep Timer</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        /* Add any other styles to remove padding from your countdown elements */
-    </style>
 </head>
 <body>
     <div id="titlebar">
@@ -21,16 +13,18 @@
     </div>
     <div id="app">
         <div id="setup-view">
-            <h1>Countdown Timer</h1>
-            <div id="time-input">
-                <input type="number" id="minutes" placeholder="Min" min="0">
-                <span>:</span>
-                <input type="number" id="seconds" placeholder="Sec" min="0" max="59">
+            <h1>Sleep Timer</h1>
+            <div id="time-display">30:00</div>
+            <div id="time-controls">
+                <button id="minus-1-min">-1 min</button>
+                <button id="plus-1-min">+1 min</button>
+                <button id="minus-10-sec">-10 sec</button>
+                <button id="plus-10-sec">+10 sec</button>
             </div>
-            <button id="startBtn">Start</button>
+            <button id="startButton">Start</button>
         </div>
         <div id="timer-view" class="hidden">
-            <div id="timer">00:00</div>
+            <div id="timer"></div>
             <div id="controls">
                 <button id="pauseBtn">Pause</button>
                 <button id="stopBtn">Stop</button>
