@@ -5,7 +5,7 @@ const { exec } = require('child_process');
 let win;
 
 function createWindow() {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -46,13 +46,20 @@ ipcMain.on('put-to-sleep', () => {
 });
 
 ipcMain.on('start-countdown', () => {
-  win.setAlwaysOnTop(true);
-  win.setSize(200, 80);
+  if (win && !win.isDestroyed()) {
+    win.setAlwaysOnTop(true);
+    win.setSize(180, 100); // Adjust these values as needed
+    win.setContentSize(180, 100); // Ensure content fits tightly
+    win.setResizable(false); // Prevent resizing during countdown
+  }
 });
 
 ipcMain.on('stop-countdown', () => {
-  win.setAlwaysOnTop(false);
-  win.setSize(250, 300);
+  if (win && !win.isDestroyed()) {
+    win.setAlwaysOnTop(false);
+    win.setSize(250, 300);
+    win.setResizable(true); // Allow resizing when not in countdown mode
+  }
 });
 
 ipcMain.on('close-app', () => {
