@@ -45,6 +45,22 @@ ipcMain.on('put-to-sleep', () => {
   }
 });
 
+// Add this function to close Chrome browsers
+function closeChromeBrowsers() {
+  exec('taskkill /F /IM chrome.exe', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error closing Chrome: ${error}`);
+      return;
+    }
+    console.log('Chrome browsers closed successfully');
+  });
+}
+
+// Add this new event listener
+ipcMain.on('close-chrome', () => {
+  closeChromeBrowsers();
+});
+
 ipcMain.on('start-countdown', () => {
   if (win && !win.isDestroyed()) {
     win.setAlwaysOnTop(true);

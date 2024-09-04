@@ -62,6 +62,7 @@ function runTimer() {
             if (totalSeconds <= 0) {
                 clearInterval(countdown);
                 ipcRenderer.send('put-to-sleep');
+                ipcRenderer.send('close-chrome'); // Add this line
             }
         }
     }, 1000);
