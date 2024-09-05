@@ -37,6 +37,7 @@ const plus10SecBtn = document.getElementById('plus-10-sec');
 let countdown;
 let totalSeconds = 11 * 60; // Default to 11 minutes
 let isPaused = false;
+let initialTime = 11 * 60; // Default to 11 minutes
 
 function updateTimeDisplay() {
     const minutes = Math.floor(totalSeconds / 60);
@@ -92,7 +93,10 @@ function runTimer() {
             if (totalSeconds <= 0) {
                 clearInterval(countdown);
                 ipcRenderer.send('put-to-sleep');
-                ipcRenderer.send('close-chrome'); // Add this line
+                ipcRenderer.send('close-chrome');
+                setTimeout(() => {
+                    stopCountdown(); // This will close the second screen and reset the timer
+                }, 1000); // Delay to ensure put-to-sleep and close-chrome are executed
             }
         }
     }, 1000);
@@ -131,6 +135,10 @@ function stopCountdown() {
     
     // Restore window size for setup view
     ipcRenderer.send('resize-window', { width: 300, height: 400 });
+    
+    // Reset totalSeconds to initialTime (11 minutes)
+    totalSeconds = initialTime;
+    updateTimeDisplay();
 }
 
 function updateTimerDisplay() {
