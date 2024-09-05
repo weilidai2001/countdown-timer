@@ -71,15 +71,8 @@ function startCountdown() {
     timerView.classList.remove('hidden');
     ipcRenderer.send('start-countdown');
     
-    // Adjust layout for timer view
-    document.body.style.display = 'flex';
-    document.body.style.flexDirection = 'column';
-    document.body.style.justifyContent = 'center';
-    document.body.style.alignItems = 'center';
-    document.body.style.height = '100vh';
-    
     // Adjust window size for timer view
-    ipcRenderer.send('resize-window', { width: 250, height: 200 });
+    ipcRenderer.send('resize-window', { width: 110, height: 95 });  // Increased width and height
     
     runTimer();
 }

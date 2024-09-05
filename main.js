@@ -11,7 +11,9 @@ function createWindow() {
     frame: false,
     transparent: true,
     movable: true,
-    resizable: true,  // Allow resizing
+    resizable: true,
+    minWidth: 110,  // Adjusted minimum width
+    minHeight: 95,  // Adjusted minimum height
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
@@ -68,8 +70,8 @@ ipcMain.on('close-chrome', () => {
 ipcMain.on('start-countdown', () => {
   if (win && !win.isDestroyed()) {
     win.setAlwaysOnTop(true);
-    win.setSize(250, 150); // Adjust these values as needed
-    win.setResizable(true); // Allow resizing during countdown
+    win.setSize(110, 95);  // Adjusted width and height
+    win.setResizable(false);
   }
 });
 
