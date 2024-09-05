@@ -1,10 +1,8 @@
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
     background-color: #f0f0f0;
 }
 
@@ -12,9 +10,14 @@ body {
     height: 30px;
     background: rgba(0, 0, 0, 0.3);
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     -webkit-app-region: drag;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 }
 
 #drag-region {
@@ -42,12 +45,14 @@ body {
 }
 
 #app {
+    margin-top: 30px; /* Add this to account for the titlebar */
+    height: calc(100vh - 30px);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Change this from center to flex-start */
     align-items: center;
-    height: calc(100vh - 30px);
     background: linear-gradient(135deg, #6e8efb, #a777e3);
+    padding-top: 20px; /* Add some padding at the top */
 }
 
 #setup-view {

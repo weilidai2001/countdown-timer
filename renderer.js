@@ -1,5 +1,26 @@
 const { ipcRenderer } = require('electron');
 
+const titlebar = document.getElementById('titlebar');
+let isDragging = false;
+let startPosition = { x: 0, y: 0 };
+
+titlebar.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startPosition = { x: e.clientX, y: e.clientY };
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+        const dx = e.clientX - startPosition.x;
+        const dy = e.clientY - startPosition.y;
+        ipcRenderer.send('move-window', { dx, dy });
+    }
+});
+
+document.addEventListener('mouseup', () => {
+    isDragging = false;
+});
+
 const timeDisplay = document.getElementById('time-display');
 const startBtn = document.getElementById('startButton');
 const pauseBtn = document.getElementById('pauseBtn');
@@ -95,8 +116,10 @@ function padZero(num) {
 // Initialize the time display
 updateTimeDisplay();
 
-// Add this at the end of the file
+// Add this near the top of the file, after other element selections
 const closeButton = document.getElementById('close-button');
+
+// Add this near the bottom of the file
 closeButton.addEventListener('click', () => {
     ipcRenderer.send('close-app');
 });

@@ -7,7 +7,10 @@ let win;
 function createWindow() {
   win = new BrowserWindow({
     width: 250,
-    height: 300,
+    height: 330, // Increased height to account for titlebar
+    frame: false,
+    transparent: true,
+    movable: true,  // Add this line
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
@@ -80,4 +83,12 @@ ipcMain.on('stop-countdown', () => {
 
 ipcMain.on('close-app', () => {
   app.quit();
+});
+
+// Add this near the other ipcMain listeners
+ipcMain.on('move-window', (event, { dx, dy }) => {
+  if (win && !win.isDestroyed()) {
+    const [x, y] = win.getPosition();
+    win.setPosition(x + dx, y + dy);
+  }
 });
