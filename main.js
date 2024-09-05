@@ -92,3 +92,10 @@ ipcMain.on('move-window', (event, { dx, dy }) => {
     win.setPosition(x + dx, y + dy);
   }
 });
+
+// Add this to handle the new 'resize-window' event
+ipcMain.on('resize-window', (event, { width, height }) => {
+  if (win && !win.isDestroyed()) {
+    win.setSize(width, height);
+  }
+});

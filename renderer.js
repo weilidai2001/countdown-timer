@@ -78,6 +78,9 @@ function startCountdown() {
     document.body.style.alignItems = 'center';
     document.body.style.height = '100vh';
     
+    // Adjust window size for timer view
+    ipcRenderer.send('resize-window', { width: 250, height: 200 });
+    
     runTimer();
 }
 
@@ -122,6 +125,9 @@ function stopCountdown() {
     document.body.style.justifyContent = '';
     document.body.style.alignItems = '';
     document.body.style.height = '';
+    
+    // Restore window size for setup view
+    ipcRenderer.send('resize-window', { width: 300, height: 400 });
 }
 
 function updateTimerDisplay() {
