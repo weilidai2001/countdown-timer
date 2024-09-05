@@ -74,6 +74,12 @@ function startCountdown() {
     // Adjust window size for timer view
     ipcRenderer.send('resize-window', { width: 110, height: 95 });  // Increased width and height
     
+    // Reset pause button icon to pause
+    const pauseIcon = pauseBtn.querySelector('i');
+    pauseIcon.classList.remove('fa-play');
+    pauseIcon.classList.add('fa-pause');
+    isPaused = false;
+    
     runTimer();
 }
 
@@ -110,7 +116,11 @@ function stopCountdown() {
     timerView.classList.add('hidden');
     ipcRenderer.send('stop-countdown');
     isPaused = false;
-    pauseBtn.textContent = 'Pause';
+    
+    // Reset pause button icon to pause
+    const pauseIcon = pauseBtn.querySelector('i');
+    pauseIcon.classList.remove('fa-play');
+    pauseIcon.classList.add('fa-pause');
     
     // Reset layout
     document.body.style.display = '';
