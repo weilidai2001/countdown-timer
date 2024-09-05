@@ -98,7 +98,14 @@ function runTimer() {
 
 function togglePause() {
     isPaused = !isPaused;
-    pauseBtn.textContent = isPaused ? 'Resume' : 'Pause';
+    const pauseIcon = pauseBtn.querySelector('i');
+    if (isPaused) {
+        pauseIcon.classList.remove('fa-pause');
+        pauseIcon.classList.add('fa-play');
+    } else {
+        pauseIcon.classList.remove('fa-play');
+        pauseIcon.classList.add('fa-pause');
+    }
 }
 
 function stopCountdown() {
