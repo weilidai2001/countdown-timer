@@ -94,8 +94,14 @@ ipcMain.on('start-countdown', () => {
 ipcMain.on('stop-countdown', () => {
   if (win && !win.isDestroyed()) {
     win.setAlwaysOnTop(false);
-    win.setSize(300, 400);
+    const newWidth = 300;
+    const newHeight = 400;
+    win.setSize(newWidth, newHeight);
     win.setResizable(true);
+    
+    // Calculate and set the new center position
+    const { x, y } = getCenterPosition(newWidth, newHeight);
+    win.setPosition(x, y);
   }
 });
 
@@ -117,3 +123,13 @@ ipcMain.on('resize-window', (event, { width, height }) => {
     win.setSize(width, height);
   }
 });
+
+// Add this function to calculate the center position
+function getCenterPosition(width, height) {
+  const primaryDisplay = screen.getPrimaryDisplay();
+  const { width: screenWidth, height: screenHeight } = primaryDisplay.workAreaSize;
+  return {
+    x: Math.floor((screenWidth - width) / 2),
+    y: Math.floor((screenHeight - height) / 2)
+  };
+}
