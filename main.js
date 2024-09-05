@@ -6,11 +6,12 @@ let win;
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 250,
-    height: 330, // Increased height to account for titlebar
+    width: 300,
+    height: 400,
     frame: false,
     transparent: true,
-    movable: true,  // Add this line
+    movable: true,
+    resizable: true,  // Allow resizing
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
@@ -67,17 +68,16 @@ ipcMain.on('close-chrome', () => {
 ipcMain.on('start-countdown', () => {
   if (win && !win.isDestroyed()) {
     win.setAlwaysOnTop(true);
-    win.setSize(180, 100); // Adjust these values as needed
-    win.setContentSize(180, 100); // Ensure content fits tightly
-    win.setResizable(false); // Prevent resizing during countdown
+    win.setSize(250, 150); // Adjust these values as needed
+    win.setResizable(true); // Allow resizing during countdown
   }
 });
 
 ipcMain.on('stop-countdown', () => {
   if (win && !win.isDestroyed()) {
     win.setAlwaysOnTop(false);
-    win.setSize(250, 300);
-    win.setResizable(true); // Allow resizing when not in countdown mode
+    win.setSize(300, 400);
+    win.setResizable(true);
   }
 });
 

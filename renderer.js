@@ -71,6 +71,13 @@ function startCountdown() {
     timerView.classList.remove('hidden');
     ipcRenderer.send('start-countdown');
     
+    // Adjust layout for timer view
+    document.body.style.display = 'flex';
+    document.body.style.flexDirection = 'column';
+    document.body.style.justifyContent = 'center';
+    document.body.style.alignItems = 'center';
+    document.body.style.height = '100vh';
+    
     runTimer();
 }
 
@@ -101,6 +108,13 @@ function stopCountdown() {
     ipcRenderer.send('stop-countdown');
     isPaused = false;
     pauseBtn.textContent = 'Pause';
+    
+    // Reset layout
+    document.body.style.display = '';
+    document.body.style.flexDirection = '';
+    document.body.style.justifyContent = '';
+    document.body.style.alignItems = '';
+    document.body.style.height = '';
 }
 
 function updateTimerDisplay() {
