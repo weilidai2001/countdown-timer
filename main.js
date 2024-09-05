@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, screen } = require('electron');
 const path = require('path');
 const { exec } = require('child_process');
 
@@ -67,11 +67,27 @@ ipcMain.on('close-chrome', () => {
   closeChromeBrowsers();
 });
 
+// Add this function to calculate the top-right position
+function getTopRightPosition(width, height) {
+  const primaryDisplay = screen.getPrimaryDisplay();
+  const { width: screenWidth, height: screenHeight } = primaryDisplay.workAreaSize;
+  return {
+    x: screenWidth - width,
+    y: 0
+  };
+}
+
 ipcMain.on('start-countdown', () => {
   if (win && !win.isDestroyed()) {
     win.setAlwaysOnTop(true);
-    win.setSize(110, 95);  // Adjusted width and height
+    const newWidth = 110;
+    const newHeight = 95;
+    win.setSize(newWidth, newHeight);
     win.setResizable(false);
+    
+    // Calculate and set the new position
+    const { x, y } = getTopRightPosition(newWidth, newHeight);
+    win.setPosition(x, y);
   }
 });
 
